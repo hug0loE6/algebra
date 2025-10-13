@@ -1,5 +1,6 @@
 package geste;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import algebre.Matrice;
@@ -9,7 +10,7 @@ public class Geste {
 	private String nom;
 	private ArrayList<Trace> traces; 
 	private Trace modele;
-	private Matrice covariance;
+	public Matrice covariance;
 	private Vecteur esperance;
 	private Vecteur weightVector;
 	private double bias;
@@ -21,7 +22,26 @@ public class Geste {
 	}
 		
 	public void init() {
-		//todo	
+		// initialisation des features de chaque trace
+		for (Trace t : traces) {
+			t.initFeatures();
+		}	
+		// calcul de l'espérance (vecteur moyen des features)
+		esperance = new Vecteur(13);
+		for (int i = 0; i < 13; i++) {
+			double sum = 0;
+			for (Trace t : traces) {
+				sum += t.getFeatureVector().get(i);
+			}
+			esperance.set(i, sum/traces.size());
+		}
+
+		// calcul de la matrice de covariance
+		ArrayList<Vecteur> echantillons = new ArrayList<Vecteur>();
+		for (Trace t : traces) {
+			echantillons.add(t.getFeatureVector());
+		}
+		covariance = Matrice.covariance(echantillons); 
 	}
 
 	public ArrayList<Trace> getTraces() {

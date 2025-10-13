@@ -74,31 +74,39 @@ public class Trace implements Featured{
 			sumx += Math.sqrt(deltapx[i]*deltapx[i] + deltapy[i]*deltapy[i]);
 		}
 		features.set(7, sumx);
-		//teta p
-		double teta[] = new double[points.size()-2];
+		//theta p
+		double theta[] = new double[points.size()-1];
 		for (int i = 1; i < points.size()-1; i++) {
-			teta[i] = Math.atan((double) 
-			(deltapx[i]*deltapy[i-1] - deltapx[i-1]*deltapy[i]) /
-			(deltapx[i]*deltapx[i-1] + deltapy[i]*deltapy[i-1]));
+			double denominateur = deltapx[i]*deltapx[i-1] + deltapy[i]*deltapy[i-1];
+			double numerateur = deltapx[i]*deltapy[i-1] - deltapx[i-1]*deltapy[i];
+			if (denominateur == 0) {
+				if (numerateur > 0) theta[i] = Math.PI/2;
+				else if (numerateur < 0) theta[i] = -Math.PI/2;
+				else theta[i] = 0;
+				continue;
+			}
+			else {
+			theta[i] = Math.atan((double) (numerateur) / (denominateur));
+			}
 		}
 		//f9
-		double sumteta = 0;
+		double sumtheta = 0;
 		for (int i = 1; i < points.size()-1; i++) {
-			sumteta += teta[i];
+			sumtheta += theta[i];
 		}
-		features.set(8, sumteta);
+		features.set(8, sumtheta);
 		//f10
-		double sumabsteta = 0;
+		double sumabstheta = 0;
 		for (int i = 1; i < points.size()-1; i++) {
-			sumabsteta += Math.abs(teta[i]);
+			sumabstheta += Math.abs(theta[i]);
 		}
-		features.set(9, sumabsteta);
+		features.set(9, sumabstheta);
 		//f11
-		double squaresumteta = 0;
+		double squaresumtheta = 0;
 		for (int i = 1; i < points.size()-1; i++) {
-			squaresumteta += teta[i]*teta[i];
+			squaresumtheta += theta[i]*theta[i];
 		}
-		features.set(10, squaresumteta);
+		features.set(10, squaresumtheta);
 		//delta timestamp
 		long deltaT[] = new long[points.size()-1];
 		for (int i = 0; i < points.size()-1; i++) {
@@ -107,9 +115,11 @@ public class Trace implements Featured{
 		//f12
 		double maxSpeed = 0;
 		for (int i = 0; i < points.size()-1; i++) {
+			if (deltaT[i] == 0) continue;
 			double res = (double) ((deltapx[i]*deltapx[i] + deltapy[i]*deltapy[i]) / deltaT[i]*deltaT[i]);
 			if (res > maxSpeed) maxSpeed = res;
 		}
+		
 		features.set(11, maxSpeed);
 		//f13
 		features.set(12, points.get(points.size()-1).getTimeStamp() - points.get(0).getTimeStamp());

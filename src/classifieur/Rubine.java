@@ -22,7 +22,7 @@ public class Rubine implements Recognizer{
 	@Override
 	//le lexique passé en paramètre doit être initialisé avant l'appel à test
 	public double[] test(Lexique lexicon) {
-//todo
+		//todo
 		return null; //a changer
 	}
 
@@ -30,14 +30,25 @@ public class Rubine implements Recognizer{
 
 	@Override
 	public Geste recognize(Trace t) {
-//todo
+		//todo
 		return null; //a changer...
 	}
 
 
 	public double squaredMahalanobis(Vecteur t, Vecteur g) {
-	//todo
+		//todo
 		return 0;// a changer
+	}
+
+	@Override
+	public double testGeste(Geste g) {
+		//todo
+		return 0; //a changer
+	}
+
+	@Override
+	public void testLexique(Lexique lexicon) {
+		//todo
 	}
 
 
