@@ -51,7 +51,7 @@ public class Matrice {
 		return dimension;
 	}
 
-	private double get(int i, int j) {
+	public double get(int i, int j) {
 		return m[i][j];
 	}
 

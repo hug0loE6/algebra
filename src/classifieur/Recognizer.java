@@ -9,5 +9,5 @@ public interface Recognizer {
 	public Geste recognize(Trace t);
 	public double testGeste(Geste g);
 	public double[] test(Lexique lexicon);
-	public void testLexique(Lexique lexicon);
+	public double testLexique(Lexique lexicon);
 }

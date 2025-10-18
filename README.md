@@ -18,9 +18,11 @@ J'ai aussi rajouté des accesseurs pour l'espérance et la covariance des gestes
 
 ## Exercice 3: Calcul des estimateurs
 
-Avant de calculer l'estimateur de covariance, nous initalisons les gestes du lexiques. Cela nous permet d'avoir l'ensemble des matrices de covariances de tout nos gestes pour calculer cet estimateur. Nous calculons aussi son inverse, tout ça dans la [méthode d'initialisation de la classe Rubine](src/classifieur/Rubine.java#L20)
+Avant de calculer l'estimateur de covariance, nous initialisons les gestes du lexique. Cela nous permet d’obtenir l’ensemble des matrices de covariance de tous nos gestes afin de calculer cet estimateur. Nous calculons également son inverse, le tout étant réalisé dans la [méthode d'initialisation de la classe Rubine](src/classifieur/Rubine.java#L20)
 
-Pour chaque geste, nous avons une méthode [initEstimators()](src/geste/Geste.java#75) qui calcule le vecteur de poids et le bias de ce geste. (les méthodes de Vecteur et Matrice nous facilite la vie pour faire les produit scalaire et les mulitplication)
+Pour compléter l’implémentation de l'interface Estimable pour la classe Geste, nous avons une méthode [initEstimators()](src/geste/Geste.java#75) qui calcule le vecteur de poids et le biais de chaque geste (les méthodes de Vecteur et Matrice nous facilitent la tâche pour les produits scalaires et les multiplications).
+
+Enfin, les accesseurs de ces estimateurs ont été ajoutés, ce qui complète l’implémentation.
 
 ## Exercice 4: Implémentation du classifieur
 

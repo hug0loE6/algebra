@@ -1,7 +1,6 @@
 package main;
 
 import classifieur.Rubine;
-import geste.Geste;
 import geste.Lexique;
 
 public class Main {
@@ -14,6 +13,5 @@ public class Main {
 
 		Rubine r = new Rubine();
 		r.init(l);
-		
 	}
 }
