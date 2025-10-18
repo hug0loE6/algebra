@@ -1,5 +1,6 @@
 package main;
 
+import classifieur.Rubine;
 import geste.Geste;
 import geste.Lexique;
 
@@ -11,8 +12,8 @@ public class Main {
 		System.out.println("Lexique size: "+l.size());
 		System.out.println("First gesture name: "+l.get(0).getName());
 
-		Geste g = l.get(0);
-		g.init();
-		g.covariance.print();
+		Rubine r = new Rubine();
+		r.init(l);
+		
 	}
 }

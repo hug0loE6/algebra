@@ -1,16 +1,16 @@
 package geste;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import algebre.Matrice;
 import algebre.Vecteur;
+import classifieur.Estimable;
 
-public class Geste {
+public class Geste implements Estimable {
 	private String nom;
 	private ArrayList<Trace> traces; 
 	private Trace modele;
-	public Matrice covariance;
+	private Matrice covariance;
 	private Vecteur esperance;
 	private Vecteur weightVector;
 	private double bias;
@@ -22,7 +22,7 @@ public class Geste {
 	}
 		
 	public void init() {
-		// initialisation des features de chaque trace
+		// initialisation des features de chaque tracé
 		for (Trace t : traces) {
 			t.initFeatures();
 		}	
@@ -36,7 +36,7 @@ public class Geste {
 			esperance.set(i, sum/traces.size());
 		}
 
-		// calcul de la matrice de covariance
+		// calcul de la covariance
 		ArrayList<Vecteur> echantillons = new ArrayList<Vecteur>();
 		for (Trace t : traces) {
 			echantillons.add(t.getFeatureVector());
@@ -46,6 +46,13 @@ public class Geste {
 
 	public ArrayList<Trace> getTraces() {
 		return this.traces;
+	}
+	
+	public Vecteur getEsperance() {
+		return this.esperance;
+	}
+	public Matrice getCovariance() {
+		return this.covariance;
 	}
 
 	public void addTrace(Trace t) {
@@ -65,7 +72,21 @@ public class Geste {
 	}
 
 	public void initEstimators(Matrice inverseEotccm) {
-		//todo
+		weightVector = inverseEotccm.mult(esperance); //ak
+		bias = -0.5 * weightVector.produitScalaire(esperance); //bk
+	}
+
+	public Matrice getCovMatrix() {
+		return this.covariance;
+	}
+
+
+	public double getBias() {
+		return this.bias;
+	}
+
+	public Vecteur getWeightVector() {
+		return this.weightVector;
 	}
 
 

@@ -1,5 +1,7 @@
 package classifieur;
 
+import java.util.ArrayList;
+
 import algebre.Matrice;
 import algebre.Vecteur;
 import geste.Geste;
@@ -16,7 +18,18 @@ public class Rubine implements Recognizer{
 	}
 
 	public void init(Lexique l) {
-		//todo
+		// init du lexique et calcul matrice covariance commune et son inverse
+		lexicon = l;
+		ArrayList<Geste> a = l.getGestes();
+		for (Geste g : a) {
+			g.init();
+		}
+		ArrayList<Matrice> covariances = new ArrayList<Matrice>();
+		for (Geste g : a) {
+			covariances.add(g.getCovariance());
+		}
+		eotccm = Matrice.esperance(covariances);
+		inverseEotccm = eotccm.inverse();
 	}
 
 	@Override
