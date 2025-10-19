@@ -1,5 +1,5 @@
 # Compte rendu du TP noté HAI702I IASD - LOPEZ Hugo
-src ennoncé = https://www.lirmm.fr/~mountaz/Ens/Alg2025/tp2/
+
 ## Exercice 1: Calcul des features pour chaque tracé
 
 Le calcul des 13 features proposées dans l’article de Rubine se trouve dans la fonction d’initialisation d’un tracé :
