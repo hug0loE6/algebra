@@ -22,7 +22,7 @@ public class Rubine implements Recognizer{
 		lexicon = l;
 		ArrayList<Geste> listGeste = l.getGestes();
 		for (Geste g : listGeste) {
-			g.init();
+				g.init();		
 		}
 		ArrayList<Matrice> covariances = new ArrayList<Matrice>();
 		for (Geste g : listGeste) {
@@ -30,6 +30,11 @@ public class Rubine implements Recognizer{
 		}
 		eotccm = Matrice.esperance(covariances);
 		inverseEotccm = eotccm.inverse();
+
+		//Ajout de l'initialisaion des estimateurs
+		for (Geste g : listGeste) {
+			g.initEstimators(inverseEotccm);
+		}
 	}
 
 	@Override

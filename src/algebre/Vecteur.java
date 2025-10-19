@@ -77,7 +77,9 @@ public class Vecteur {
 	public String toString() {
 		String result = "";
 		for (int i = 0; i < coords.length; i++) {
-			result += this.coords[i] +", "; 
+			
+			//result += this.coords[i] +", "; 
+			result += i+" : "+this.coords[i] +"\n";
 		}
 		return result;
 	}

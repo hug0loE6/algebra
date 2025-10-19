@@ -26,6 +26,7 @@ public class Geste implements Estimable {
 		for (Trace t : traces) {
 			t.initFeatures();
 		}	
+
 		// calcul de l'espérance (vecteur moyen des features)
 		esperance = new Vecteur(13);
 		for (int i = 0; i < 13; i++) {

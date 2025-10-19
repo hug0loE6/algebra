@@ -36,10 +36,21 @@ public class Trace implements Featured{
 	
 	public void initFeatures() {
 		features = new Vecteur(13);
+		double distance = points.get(0).distance(points.get(2));
 		//f1
-		features.set(0, (points.get(2).getX() - points.get(0).getX())/(points.get(0).distance(points.get(2))));
+		if (distance == 0) {
+			features.set(0, 0);
+		}
+		else{
+			features.set(0, (points.get(2).getX() - points.get(0).getX())/(distance));
+		}
 		//f2
-		features.set(1, (points.get(2).getY() - points.get(0).getY())/(points.get(0).distance(points.get(2))));
+		if (distance == 0) {
+			features.set(1, 0);
+		}
+		else{
+			features.set(1, (points.get(2).getY() - points.get(0).getY())/(distance));
+		}
 		//calcule bounding box
 		int xmin = points.get(0).getX(), xmax = points.get(0).getX();
 		int ymin = points.get(0).getY(), ymax = points.get(0).getY();
@@ -54,13 +65,32 @@ public class Trace implements Featured{
 		//f3
 		features.set(2, max.distance(min));
 		//f4
-		features.set(3, Math.atan((double)(max.getY() - min.getY())/(max.getX() - min.getX())));
+		double denominateur = max.getX() - min.getX();
+		double numerateur = max.getY() - min.getY();
+		if (denominateur == 0) {
+				if (numerateur > 0) features.set(3, Math.PI/2);
+				else if (numerateur < 0) features.set(3, -Math.PI/2);
+				else features.set(3, 0);
+		}
+		else {
+		features.set(3, Math.atan((double)(numerateur)/(denominateur)));
+		}
 		//f5
 		features.set(4, points.get(0).distance(points.get(points.size()-1)));
 		//f6
-		features.set(5, (points.get(points.size()-1).getX() - points.get(0).getX())/features.get(4));
+		if (features.get(4) == 0) {
+			features.set(5, 0);
+		}
+		else{
+			features.set(5, (points.get(points.size()-1).getX() - points.get(0).getX())/features.get(4));
+		}
 		//f7
-		features.set(6, (points.get(points.size()-1).getY() - points.get(0).getY())/features.get(4));
+		if (features.get(4) == 0) {
+			features.set(6, 0);
+		}
+		else{
+			features.set(6, (points.get(points.size()-1).getY() - points.get(0).getY())/features.get(4));
+		}
 		//delta x et delta y
 		int deltapx[] = new int[points.size()-1];
 		int deltapy[] = new int[points.size()-1];
@@ -77,8 +107,8 @@ public class Trace implements Featured{
 		//theta p
 		double theta[] = new double[points.size()-1];
 		for (int i = 1; i < points.size()-1; i++) {
-			double denominateur = deltapx[i]*deltapx[i-1] + deltapy[i]*deltapy[i-1];
-			double numerateur = deltapx[i]*deltapy[i-1] - deltapx[i-1]*deltapy[i];
+			denominateur = deltapx[i]*deltapx[i-1] + deltapy[i]*deltapy[i-1];
+			numerateur = deltapx[i]*deltapy[i-1] - deltapx[i-1]*deltapy[i];
 			if (denominateur == 0) {
 				if (numerateur > 0) theta[i] = Math.PI/2;
 				else if (numerateur < 0) theta[i] = -Math.PI/2;
